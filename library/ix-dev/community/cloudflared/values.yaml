@@ -18,6 +18,9 @@ cloudflaredConfig:
 cloudflaredNetwork:
   hostNetwork: false
 
+cloudflaredDohConfiguration:
+  dohEnabled: false
+
 cloudflaredRunAs:
   user: 568
   group: 568

@@ -38,6 +38,10 @@ workload:
             {{ end }}
           env:
             TUNNEL_TOKEN: {{ .Values.cloudflaredConfig.tunnelToken }}
+            TUNNEL_DNS: {{ .Values.cloudflaredDohConfiguration.dohEnabled }}
+            TUNNEL_DNS_PORT: {{ .Values.cloudflaredDohConfiguration.dohPort }}
+            TUNNEL_DNS_UPSTREAM: {{ .Values.cloudflaredDohConfiguration.dohUpstreamEndpointsList }}
+            TUNNEL_DNS_MAX_UPSTREAM_CONNS: {{ .Values.cloudflaredDohConfiguration.dohMaxUpstreamConnections }}
           {{ with .Values.cloudflaredConfig.additionalEnvs }}
           envList:
             {{ range $env := . }}

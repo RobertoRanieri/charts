@@ -102,6 +102,51 @@ questions:
             type: boolean
             default: false
 
+  - variable: cloudflaredDohConfiguration
+    label: DNS over HTTPS Configuration
+    schema:
+      type: dict
+      attrs:
+        - variable: dohEnabled
+          label: Enable DoH
+          description: Enable the DNS over HTTPS proxy server.
+          schema:
+            type: boolean
+            default: false
+        - variable: dohPort
+          label: Port on which the DNS over HTTPS proxy server listens on.
+          schema:
+            type: int
+            min: 8000
+            max: 65535
+            default: 22300
+            required: true
+            show_if: [["dohEnabled", "=", true]]
+        - variable: dohUpstreamEndpointsList
+          label: Upstream endpoint URLs for the DNS over HTTPS proxy server.
+          description: You can specify multiple endpoints for redundancy.
+          schema:
+            type: list
+            default: ["https://1.1.1.1/dns-query", "https://1.0.0.1/dns-query"]
+            required: true
+            show_if: [["dohEnabled", "=", true]]
+            items:
+              - variable: dohUpstreamEndpoint
+                label: "DoH Upstream Endpoint URL"
+                schema:
+                  type: string
+                - variable: dohEnabled
+        - variable: dohMaxUpstreamConnections
+          label: Maximum concurrent connections to upstream.
+          description: Setting this to 0 means an unlimited quantity of concurrent upstream connections. 
+          schema:
+            type: int
+            min: 0
+            max: 65535
+            default: 5
+            required: true
+            show_if: [["dohEnabled", "=", true]]
+
   - variable: cloudflaredStorage
     label: ""
     group: Storage Configuration
