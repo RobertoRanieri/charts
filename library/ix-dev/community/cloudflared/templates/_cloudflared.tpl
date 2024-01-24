@@ -62,4 +62,19 @@ workload:
                                                         "GID" .Values.cloudflaredRunAs.group
                                                         "mode" "check"
                                                         "type" "install") | nindent 8 }}
+
+{{/* Service */}}
+service:
+  cloudflared:
+    enabled: {{ .Values.cloudflaredDohConfiguration.dohEnabled }}
+    primary: true
+    type: NodePort
+    targetSelector: cloudflared
+    ports:
+      doh:
+        enabled: {{ .Values.cloudflaredDohConfiguration.dohEnabled }}
+        primary: true
+        port: {{ .Values.cloudflaredDohConfiguration.dohPort }}
+        nodePort: {{ .Values.cloudflaredDohConfiguration.dohPort }}
+        targetSelector: cloudflared
 {{- end -}}
